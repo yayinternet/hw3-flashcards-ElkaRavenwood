@@ -7,10 +7,10 @@
 // - Adding additional fields
 
 class Flashcard {
-  
+
   constructor(containerElement, frontText, backText) {
     this.containerElement = containerElement;
-
+    
     this._flipCard = this._flipCard.bind(this);
 
     this.flashcardElement = this._createFlashcardDOM(frontText, backText);

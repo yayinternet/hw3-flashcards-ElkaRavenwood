@@ -69,21 +69,21 @@ function dragEnd(event) {
 	 	// change[0] += event.clientX - origin[0]; // prevents from returning to original position 
 	 	// change[1] += event.clientY - origin[1];
   	// For animating back to original spot ***NOT WORKING***
-  	// translate[0] = 0; // resets translate
-  	change[0] = totalTranslate[0]/60;
-  	change[1] = totalTranslate[1]/60;
-  	id = setInterval(frame, 10);
-  	function frame() {
+  	change[0] = totalTranslate[0]/600;
+  	change[1] = totalTranslate[1]/600;
+  	event.target.style.transform = '';
+  	// id = setInterval(frame, 10);
+  	// function frame() {
   	  // If at original position	
-      if (event.clientX === origin[0]||translate[0] === origin[0]) {
-      	clearInterval(id);
-      	console.log("end");
-      } else { // otherwise continues with translation
-      	translate[0] += change[0];
-        event.target.style.transform = 'translate(' +  change[0] + 'px,' +  change[1] + 'px) '; 
-        console.log("move" + " " + change);
-      }
-    }
+      // if (event.clientX === origin[0]||translate[0] === origin[0]) {
+      // 	clearInterval(id);
+      // 	console.log("end");
+      // } else { // otherwise continues with translation
+      // 	translate[0] += change[0];
+      //   event.target.style.transform = 'translate(' +  change[0] + 'px,' +  change[1] + 'px) '; 
+      //   console.log("move" + " " + change);
+      // }    
+    // }
   	
   }
   
