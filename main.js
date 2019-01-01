@@ -5,6 +5,7 @@ const app = new App();
 let origin = [null,null]; //represents original position
 let change = [0,0]; //represents the new position
 let translate = [0,0];
+let totalTranslate = [0,0];
 let dragging = false;
 var id;
 
@@ -29,9 +30,11 @@ function dragMove(event) {
   event.preventDefault();
   translate[0] = change[0] + event.clientX - origin[0]; // How much to move
   translate[1] = change[1] + event.clientY - origin[1]; // How much to move
+  totalTranslate[0] += translate[0];
+  totalTranslate[1] += translate[1];
   event.currentTarget.style.transform = 'translate(' +  translate[0] + 'px,' +  translate[1] + 'px) ' ; // translates
   let rotateAngle = 0.2*(event.clientX - origin[0]);
-  event.currentTarget.style.transform += 'rotate(' + rotateAngle + 'deg);'; //rotates ***NOT WORKING***
+  event.currentTarget.style.transform += 'rotate(' + rotateAngle + 'deg)'; //rotates ***NOT WORKING***
   // if dragged far, changes background
   if (event.clientX - origin[0] > 150||event.clientX - origin[0] < -150) {
   	document.body.style.backgroundColor = '#97b7b7';
@@ -67,22 +70,20 @@ function dragEnd(event) {
 	 	// change[1] += event.clientY - origin[1];
   	// For animating back to original spot ***NOT WORKING***
   	// translate[0] = 0; // resets translate
-  	// change[0] = (origin[0]-event.clientX)/60;
-  	// change[1] = (origin[1]-event.clientY)/60;
-  	// console.log("Change: " + change);
-  	// id = setInterval(frame, 10);
-  	// function frame() {
-  	//   // If at original position	
-   //    if (event.clientX === origin[0]||translate[0] === origin[0]) {
-   //    	clearInterval(id);
-   //    	console.log("end");
-   //    } else { // otherwise continues with translation
-   //    	translate[0] += change[0];
-   //      event.target.style.transform = 'translate(' +  change[0] + 'px,' +  change[1] + 'px) '; 
-   //      console.log("t " + translate);
-			//   console.log("move");
-   //    }
-   //  }
+  	change[0] = totalTranslate[0]/60;
+  	change[1] = totalTranslate[1]/60;
+  	id = setInterval(frame, 10);
+  	function frame() {
+  	  // If at original position	
+      if (event.clientX === origin[0]||translate[0] === origin[0]) {
+      	clearInterval(id);
+      	console.log("end");
+      } else { // otherwise continues with translation
+      	translate[0] += change[0];
+        event.target.style.transform = 'translate(' +  change[0] + 'px,' +  change[1] + 'px) '; 
+        console.log("move" + " " + change);
+      }
+    }
   	
   }
   
