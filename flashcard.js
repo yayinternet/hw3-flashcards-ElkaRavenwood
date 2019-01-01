@@ -7,17 +7,18 @@
 // - Adding additional fields
 
 class Flashcard {
+  
   constructor(containerElement, frontText, backText) {
     this.containerElement = containerElement;
 
     this._flipCard = this._flipCard.bind(this);
 
     this.flashcardElement = this._createFlashcardDOM(frontText, backText);
-    this.containerElement.append(this.flashcardElement);
+    this.containerElement.append(this.flashcardElement); 
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
   }
-
+  
   // Creates the DOM object representing a flashcard with the given
   // |frontText| and |backText| strings to display on the front and
   // back of the card. Returns a reference to root of this DOM
@@ -35,6 +36,9 @@ class Flashcard {
     const cardContainer = document.createElement('div');
     cardContainer.classList.add('flashcard-box');
     cardContainer.classList.add('show-word');
+    cardContainer.addEventListener('pointerdown', dragStart);
+    cardContainer.addEventListener('pointermove', dragMove);
+    cardContainer.addEventListener('pointerup', dragEnd);
 
     const wordSide = document.createElement('div');
     wordSide.classList.add('flashcard');
